@@ -6,11 +6,13 @@
 Graphics::Graphics()
 {
     window = new sf::RenderWindow;
+    circle = new sf::CircleShape;
 }
 
 Graphics::~Graphics()
 {
     delete window;
+    delete circle;
 }
 
 void Graphics::createWindow(uint x, uint y, std::string title)
@@ -31,17 +33,17 @@ void Graphics::windowClear()
 void Graphics::drawCircle()
 {
     int radius = randInt(25, 100);
-    sf::CircleShape shape(radius);
+    circle->setRadius(radius);
     int x = randInt(-radius, window->getSize().x);
     int y = randInt(-radius, window->getSize().y);
     float xF = static_cast<float>(x);
     float yF = static_cast<float>(y);
-    shape.setPosition(xF, yF);
-    shape.setFillColor(sf::Color(
+    circle->setPosition(xF, yF);
+    circle->setFillColor(sf::Color(
         randInt(0, 255),
         randInt(0, 255),
         randInt(0, 255)));
-    window->draw(shape);
+    window->draw(*circle);
 }
 
 void Graphics::windowDisplay()

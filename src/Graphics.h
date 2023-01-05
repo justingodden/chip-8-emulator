@@ -12,6 +12,7 @@ public:
 
 private:
     sf::RenderWindow *window = nullptr;
+    sf::CircleShape *circle = nullptr;
 
 public:
     void createWindow(uint x, uint y, std::string title);
