@@ -15,7 +15,7 @@ Graphics::~Graphics()
 
 void Graphics::createWindow(uint x, uint y, std::string title)
 {
-    return window->create(sf::VideoMode(x, y), title);
+    window->create(sf::VideoMode(x, y), title);
 }
 
 bool Graphics::windowIsOpen()
@@ -25,7 +25,7 @@ bool Graphics::windowIsOpen()
 
 void Graphics::windowClear()
 {
-    return window->clear();
+    window->clear();
 }
 
 void Graphics::drawCircle()
@@ -41,12 +41,12 @@ void Graphics::drawCircle()
         randInt(0, 255),
         randInt(0, 255),
         randInt(0, 255)));
-    return window->draw(shape);
+    window->draw(shape);
 }
 
 void Graphics::windowDisplay()
 {
-    return window->display();
+    window->display();
 }
 
 bool Graphics::pollEvent(sf::Event &event)
@@ -56,7 +56,7 @@ bool Graphics::pollEvent(sf::Event &event)
 
 void Graphics::close()
 {
-    return window->close();
+    window->close();
 }
 
 int Graphics::randInt(int min, int max)
