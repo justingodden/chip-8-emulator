@@ -15,9 +15,9 @@ Graphics::~Graphics()
     delete circle;
 }
 
-void Graphics::createWindow(uint x, uint y, std::string title)
+void Graphics::createWindow(uint width, uint height, std::string title)
 {
-    window->create(sf::VideoMode(x, y), title);
+    window->create(sf::VideoMode(width, height), title);
 }
 
 bool Graphics::windowIsOpen()

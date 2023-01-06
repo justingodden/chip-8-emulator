@@ -15,7 +15,7 @@ private:
     sf::CircleShape *circle = nullptr;
 
 public:
-    void createWindow(uint x, uint y, std::string title);
+    void createWindow(uint width, uint height, std::string title);
     bool windowIsOpen();
     void windowClear();
     void drawCircle();
