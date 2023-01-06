@@ -50,6 +50,7 @@ void Graphics::drawCircle()
 void Graphics::drawPixel(int xPos, int yPos)
 {
     float scaleFactorF = static_cast<float>(scaleFactor);
+    // sf::RectangleShape pixel(sf::Vector2(scaleFactorF, scaleFactorF));
     pixel->setSize(sf::Vector2(scaleFactorF, scaleFactorF));
     pixel->setPosition(xPos * scaleFactor, yPos * scaleFactor);
     window->draw(*pixel);

@@ -1,7 +1,10 @@
 #include <iostream>
 #include <fstream>
+#include <iterator>
+#include <vector>
 #include <algorithm>
 #include <chrono>
+#include <iomanip>
 #include <stdint.h>
 #include "Chip8.h"
 
@@ -9,6 +12,10 @@ Chip8::Chip8(std::string romPath)
     : romPath(romPath)
 {
     pc = PC_START_ADDRESS;
+    std::fill(memory.begin(), memory.end(), 0);
+    std::fill(display.begin(), display.end(), 0);
+    std::fill(keypad.begin(), keypad.end(), 0);
+    std::fill(V.begin(), V.end(), 0);
     loadROM();
     LoadFonts();
 
@@ -23,27 +30,13 @@ Chip8::~Chip8()
 
 void Chip8::loadROM()
 {
-    std::ifstream file(romPath, std::ios::binary | std::ios::ate);
+    std::ifstream input(romPath, std::ios::binary);
+    std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
 
-    if (file.is_open())
+    // Load the ROM contents into the Chip8's memory, starting at 0x200
+    for (long i = 0; i < buffer.size(); ++i)
     {
-        // Get size of file and allocate a buffer to hold the contents
-        std::streampos size = file.tellg();
-        char *buffer = new char[size];
-
-        // Go back to the beginning of the file and fill the buffer
-        file.seekg(0, std::ios::beg);
-        file.read(buffer, size);
-        file.close();
-
-        // Load the ROM contents into the Chip8's memory, starting at 0x200
-        for (long i = 0; i < size; ++i)
-        {
-            memory[PC_START_ADDRESS + i] = buffer[i];
-        }
-
-        // Free the buffer
-        delete[] buffer;
+        memory[PC_START_ADDRESS + i] = buffer[i];
     }
 }
 
@@ -75,7 +68,7 @@ void Chip8::loop()
 
 void Chip8::fetch()
 {
-    opcode = (memory[pc] << 8u) | memory[pc + 1];
+    opcode = (memory[pc + 1] << 8u) | memory[pc];
     opcodeNibbles[0] = (opcode & 0xF000u) >> 12;
     opcodeNibbles[1] = (opcode & 0xF00u) >> 8;
     opcodeNibbles[2] = (opcode & 0xF0u) >> 4;
@@ -110,6 +103,10 @@ void Chip8::decodeExecute()
         break;
     case 0xA:
         OP_ANNN();
+        break;
+
+    case 0xD:
+        OP_DXYN();
         break;
 
     default:
@@ -147,14 +144,18 @@ void Chip8::OP_DXYN()
     gfx->windowClear();
     for (int i = 0; i < (32 * 64); i++)
     {
-        uint yPos = i / 64;
-        uint xPos = i - (yPos * 64);
-        gfx->drawPixel(xPos, yPos);
+        if (display[i])
+        {
+            uint yPos = i / 64;
+            uint xPos = i - (yPos * 64);
+            gfx->drawPixel(xPos, yPos);
+        }
     }
     gfx->windowDisplay();
 }
 
 void Chip8::NOT_IMPLEMENTED()
 {
-    std::cout << std::hex << opcode << " NOT IMPLEMENTED\n";
+    std::cout << std::setfill('0') << std::setw(4) << std::right << std::hex << opcode;
+    std::cout << " NOT IMPLEMENTED\n";
 }
