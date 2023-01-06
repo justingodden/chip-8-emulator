@@ -1,31 +1,16 @@
-#include <string.h>
-#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <string>
 #include <SFML/System/Time.hpp>
-#include "Graphics.h"
+#include "Chip8.h"
+#include "Disassembler.h"
 
-int main()
+int main(int argc, char *argv[])
 {
-    uint w = 500;
-    uint h = 500;
-    std::string title = "Chip8 Emulator";
-
-    Graphics gfx;
-    gfx.createWindow(w, h, title);
-
-    while (gfx.windowIsOpen())
+    if (argc == 2)
     {
-        sf::Event event;
-        while (gfx.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                gfx.close();
-        }
-        gfx.windowClear();
-        gfx.drawCircle();
-        gfx.windowDisplay();
+        Chip8 chip8(std::string(argv[1]));
 
-        sf::Time t = sf::milliseconds(100);
-        sf::sleep(t);
+        return 0;
     }
 
     return 0;
