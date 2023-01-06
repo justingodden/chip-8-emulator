@@ -3,7 +3,8 @@
 #include <SFML/System/Time.hpp>
 #include "Graphics.h"
 
-Graphics::Graphics()
+Graphics::Graphics(uint scaleFactor)
+    : scaleFactor(scaleFactor)
 {
     window = new sf::RenderWindow;
     circle = new sf::CircleShape;
@@ -15,9 +16,9 @@ Graphics::~Graphics()
     delete circle;
 }
 
-void Graphics::createWindow(uint width, uint height, std::string title)
+void Graphics::createWindow(std::string title)
 {
-    window->create(sf::VideoMode(width, height), title);
+    window->create(sf::VideoMode(width * scaleFactor, height * scaleFactor), title);
 }
 
 bool Graphics::windowIsOpen()
@@ -44,6 +45,14 @@ void Graphics::drawCircle()
         randInt(0, 255),
         randInt(0, 255)));
     window->draw(*circle);
+}
+
+void Graphics::drawPixel(int xPos, int yPos)
+{
+    float scaleFactorF = static_cast<float>(scaleFactor);
+    pixel->setSize(sf::Vector2(scaleFactorF, scaleFactorF));
+    pixel->setPosition(xPos * scaleFactor, yPos * scaleFactor);
+    window->draw(*pixel);
 }
 
 void Graphics::windowDisplay()

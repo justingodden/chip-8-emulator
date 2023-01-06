@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
     {
         std::string fp(argv[1]);
         Chip8 chip8(fp);
+        chip8.loop();
 
         return 0;
     }

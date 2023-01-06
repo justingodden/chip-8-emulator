@@ -7,24 +7,31 @@
 class Graphics
 {
 public:
-    Graphics();
+    Graphics(uint scaleFactor);
     ~Graphics();
 
 private:
     sf::RenderWindow *window = nullptr;
     sf::CircleShape *circle = nullptr;
+    sf::RectangleShape *pixel = nullptr;
 
 public:
-    void createWindow(uint width, uint height, std::string title);
+    void createWindow(std::string title);
     bool windowIsOpen();
     void windowClear();
     void drawCircle();
+    void drawPixel(int xPos, int yPos);
     void windowDisplay();
     bool pollEvent(sf::Event &event);
     void close();
 
+public:
+    uint scaleFactor;
+
 private:
     int randInt(int min, int max);
+    uint width = 64;
+    uint height = 32;
 };
 
 #endif
