@@ -12,15 +12,15 @@ public:
 
 private:
     sf::RenderWindow *window = nullptr;
-    sf::CircleShape *circle = nullptr;
-    sf::RectangleShape *pixel = nullptr;
+    sf::Texture *texture = nullptr;
+    sf::Sprite *sprite = nullptr;
+    sf::Uint8 *pixels = new sf::Uint8[64 * 32 * 4];
 
 public:
     void createWindow(std::string title);
     bool windowIsOpen();
     void windowClear();
-    void drawCircle();
-    void drawPixel(int xPos, int yPos);
+    void drawPixels(std::array<uint8_t, 64 * 32> *display);
     void windowDisplay();
     bool pollEvent(sf::Event &event);
     void close();

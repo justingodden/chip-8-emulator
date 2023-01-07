@@ -1,3 +1,4 @@
+#include <array>
 #include <string.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
@@ -7,13 +8,17 @@ Graphics::Graphics(uint scaleFactor)
     : scaleFactor(scaleFactor)
 {
     window = new sf::RenderWindow;
-    circle = new sf::CircleShape;
+    texture = new sf::Texture;
+    sprite = new sf::Sprite;
+    texture->create(64, 32);
 }
 
 Graphics::~Graphics()
 {
     delete window;
-    delete circle;
+    delete texture;
+    delete sprite;
+    delete pixels;
 }
 
 void Graphics::createWindow(std::string title)
@@ -31,29 +36,20 @@ void Graphics::windowClear()
     window->clear();
 }
 
-void Graphics::drawCircle()
+void Graphics::drawPixels(std::array<uint8_t, 64 * 32> *display)
 {
-    int radius = randInt(25, 100);
-    circle->setRadius(radius);
-    int x = randInt(-radius, window->getSize().x);
-    int y = randInt(-radius, window->getSize().y);
-    float xF = static_cast<float>(x);
-    float yF = static_cast<float>(y);
-    circle->setPosition(xF, yF);
-    circle->setFillColor(sf::Color(
-        randInt(0, 255),
-        randInt(0, 255),
-        randInt(0, 255)));
-    window->draw(*circle);
-}
+    for (uint i = 0; i < 64 * 32; i++)
+    {
+        pixels[i * 4] = (*display)[i];
+        pixels[(i * 4) + 1] = (*display)[i];
+        pixels[(i * 4) + 2] = (*display)[i];
+        pixels[(i * 4) + 3] = (*display)[i];
+    }
 
-void Graphics::drawPixel(int xPos, int yPos)
-{
-    float scaleFactorF = static_cast<float>(scaleFactor);
-    // sf::RectangleShape pixel(sf::Vector2(scaleFactorF, scaleFactorF));
-    pixel->setSize(sf::Vector2(scaleFactorF, scaleFactorF));
-    pixel->setPosition(xPos * scaleFactor, yPos * scaleFactor);
-    window->draw(*pixel);
+    texture->update(pixels);
+    sprite->setTexture(*texture);
+    sprite->setScale(scaleFactor, scaleFactor);
+    window->draw(*sprite);
 }
 
 void Graphics::windowDisplay()

@@ -21,24 +21,22 @@ private:
     void fetch();
     void decodeExecute();
 
-    void NOT_IMPLEMENTED();
-
 private:
     Graphics *gfx = nullptr;
     uint16_t PC_START_ADDRESS = 0x200;
     uint16_t FONT_START_ADDRESS = 0x50;
     uint16_t opcode;
-    std::array<uint8_t, 6> opcodeNibbles;
+    std::array<uint16_t, 6> opcodeNibbles;
     std::string romPath;
     int clockDelay = 1;
 
     std::array<uint8_t, 16> V; // registers V0,... VF
     uint16_t I;
-    uint16_t pc;
+    uint16_t pc = PC_START_ADDRESS;
     std::array<uint8_t, 4096> memory;
     std::array<uint8_t, 64 * 32> display;
     std::stack<uint16_t> stack;
-    uint16_t sp = 0x200;
+    uint16_t sp;
     uint8_t delayTimer;
     uint8_t soundTimer;
     std::array<uint8_t, 16> keypad;
@@ -71,6 +69,8 @@ private:
     void OP_7XNN();
     void OP_ANNN();
     void OP_DXYN();
+    void IMPLEMENTED();
+    void NOT_IMPLEMENTED();
 };
 
 #endif
