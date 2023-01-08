@@ -62,14 +62,143 @@ bool Graphics::pollEvent(sf::Event &event)
     return window->pollEvent(event);
 }
 
+bool Graphics::checkKeyPresses(std::array<uint8_t, 16> &keypad)
+{
+    bool running = true;
+
+    sf::Event event;
+    while (window->pollEvent(event))
+    {
+        switch (event.type)
+        {
+        case sf::Event::Closed:
+            window->close();
+            running = false;
+            return running;
+
+        case sf::Event::KeyPressed:
+            switch (event.key.code)
+            {
+            case sf::Keyboard::Escape:
+                window->close();
+                running = false;
+                return running;
+
+            case sf::Keyboard::Num1:
+                keypad[0x0] = 1;
+                return running;
+            case sf::Keyboard::Num2:
+                keypad[0x1] = 1;
+                return running;
+            case sf::Keyboard::Num3:
+                keypad[0x2] = 1;
+                return running;
+            case sf::Keyboard::Num4:
+                keypad[0x3] = 1;
+                return running;
+            case sf::Keyboard::Q:
+                keypad[0x4] = 1;
+                return running;
+            case sf::Keyboard::W:
+                keypad[0x5] = 1;
+                return running;
+            case sf::Keyboard::E:
+                keypad[0x6] = 1;
+                return running;
+            case sf::Keyboard::R:
+                keypad[0x7] = 1;
+                return running;
+            case sf::Keyboard::A:
+                keypad[0x8] = 1;
+                return running;
+            case sf::Keyboard::S:
+                keypad[0x9] = 1;
+                return running;
+            case sf::Keyboard::D:
+                keypad[0xA] = 1;
+                return running;
+            case sf::Keyboard::F:
+                keypad[0xB] = 1;
+                return running;
+            case sf::Keyboard::Z:
+                keypad[0xC] = 1;
+                return running;
+            case sf::Keyboard::X:
+                keypad[0xD] = 1;
+                return running;
+            case sf::Keyboard::C:
+                keypad[0xE] = 1;
+                return running;
+            case sf::Keyboard::V:
+                keypad[0xF] = 1;
+                return running;
+            default:
+                return running;
+            }
+
+        case sf::Event::KeyReleased:
+            switch (event.key.code)
+            {
+            case sf::Keyboard::Num1:
+                keypad[0x0] = 0;
+                return running;
+            case sf::Keyboard::Num2:
+                keypad[0x1] = 0;
+                return running;
+            case sf::Keyboard::Num3:
+                keypad[0x2] = 0;
+                return running;
+            case sf::Keyboard::Num4:
+                keypad[0x3] = 0;
+                return running;
+            case sf::Keyboard::Q:
+                keypad[0x4] = 0;
+                return running;
+            case sf::Keyboard::W:
+                keypad[0x5] = 0;
+                return running;
+            case sf::Keyboard::E:
+                keypad[0x6] = 0;
+                return running;
+            case sf::Keyboard::R:
+                keypad[0x7] = 0;
+                return running;
+            case sf::Keyboard::A:
+                keypad[0x8] = 0;
+                return running;
+            case sf::Keyboard::S:
+                keypad[0x9] = 0;
+                return running;
+            case sf::Keyboard::D:
+                keypad[0xA] = 0;
+                return running;
+            case sf::Keyboard::F:
+                keypad[0xB] = 0;
+                return running;
+            case sf::Keyboard::Z:
+                keypad[0xC] = 0;
+                return running;
+            case sf::Keyboard::X:
+                keypad[0xD] = 0;
+                return running;
+            case sf::Keyboard::C:
+                keypad[0xE] = 0;
+                return running;
+            case sf::Keyboard::V:
+                keypad[0xF] = 0;
+                return running;
+            default:
+                return running;
+            }
+        default:
+            return running;
+        }
+    }
+
+    return running;
+}
+
 void Graphics::close()
 {
     window->close();
-}
-
-int Graphics::randInt(int min, int max)
-{
-    int range = abs(min - max) + 1;
-    int randNum = rand() % (range) + min;
-    return randNum;
 }

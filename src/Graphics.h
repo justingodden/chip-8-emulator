@@ -23,13 +23,13 @@ public:
     void drawPixels(std::array<uint8_t, 64 * 32> *display);
     void windowDisplay();
     bool pollEvent(sf::Event &event);
+    bool checkKeyPresses(std::array<uint8_t, 16> &keypad);
     void close();
 
 public:
     uint scaleFactor;
 
 private:
-    int randInt(int min, int max);
     uint width = 64;
     uint height = 32;
 };
