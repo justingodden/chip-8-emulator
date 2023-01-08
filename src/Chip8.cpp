@@ -173,7 +173,7 @@ void Chip8::OP_DXYN()
         for (uint col = 0; col < 8; ++col)
         {
             uint8_t spritePixel = spriteByte & (0x80u >> col);
-            uint8_t *screenPixel = &display[(yPos + row) * 64 + (xPos + col)];
+            uint8_t *screenPixel = &display[(xPos + col) + ((yPos + row) * 64)];
 
             if (spritePixel)
             {
