@@ -19,7 +19,7 @@ Chip8::Chip8(std::string romPath)
     loadROM();
     LoadFonts();
 
-    gfx = new Graphics(20);
+    gfx = new Graphics(30);
     gfx->createWindow("Chip-8 Emulator");
 }
 
@@ -466,12 +466,12 @@ void Chip8::OP_DXYN()
 
             if (spritePixel)
             {
-                if (*screenPixel == 255)
+                if (*screenPixel == 0xFFu)
                 {
                     V[0xF] = 1;
                 }
 
-                *screenPixel ^= 0xFFFFFFFF;
+                *screenPixel ^= 0xFFu;
             }
         }
     }
