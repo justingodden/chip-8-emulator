@@ -73,6 +73,7 @@ void Chip8::loop()
             }
             if (soundTimer > 0)
             {
+                std::cout << '\a' << std::flush;
                 soundTimer -= 1;
             }
         }
@@ -610,7 +611,7 @@ void Chip8::OP_FX29()
 
 void Chip8::OP_FX33() // Binary-coded decimal conversion
 {
-    uint8_t VX = std::move(V[opcodeNibbles[1]]);
+    uint8_t VX = V[opcodeNibbles[1]];
     uint8_t hundreds = 0;
     uint8_t tens = 0;
     uint8_t ones = 0;
