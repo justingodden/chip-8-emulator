@@ -50,7 +50,7 @@ This was an incredibly helpful resource. It walks through the architecture and r
 
 ## Build
 
-[SFML](https://www.sfml-dev.org/) must be installed for your respective opeating system.
+[SFML](https://www.sfml-dev.org/) must be installed for your respective operating system.
 
 To compile:
 
